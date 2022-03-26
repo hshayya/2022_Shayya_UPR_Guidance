@@ -3,10 +3,13 @@
 #tdtomato = from the plasmid that was used to make the Ai9 mice https://www.addgene.org/22799/
 #LacZ from Ron Yu Addgene 32642 Ref. 2004 Neuron Paper (https://www.addgene.org/32642/sequences/). OMIT IRES AND TAU SEQUENCE TO AVOID homogeny to ires-tau-GFP etc.
 
-#Create Combined fasta
+#Create Salmon Index, - Fluors
+salmon --no-version-check index -t IS_merged_CodingTranscriptsHS_transcripts.fasta -i IS_merged_CodingTranscriptsHS_mm10_k31
+
+#Create Combined fasta w/ fluors
 cat IS_merged_CodingTranscriptsHS_transcripts.fasta egfp_tdtom_lacz.fa > IS_merged_CodingTranscriptsHS_transcripts_egfp_tdtom_lacz.fasta
 
-#Create Salmon Index
+#Create Salmon Index, + Fluors
 salmon --no-version-check index -t IS_merged_CodingTranscriptsHS_transcripts_egfp_tdtom_lacz.fasta -i IS_merged_CodingTranscriptsHS_transcripts_egfp_tdtom_lacz_mm10_k31
  
 #Create STAR Index

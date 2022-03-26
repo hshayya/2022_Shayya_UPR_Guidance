@@ -14,10 +14,15 @@ import twobitreader as twobit
 transcripts=list(GTF2_TranscriptAssembler('IS_merged_CodingTranscriptsHS.gtf'))
 lookup_dict = {i.attr['transcript_id']:i.attr['gene_name'] for i in transcripts}
 
-with open('tx_to_gene_name_gfp_tdtom_lacz.tsv','w') as fout:
+#No fluors
+with open('tx_to_gene_name.tsv','w') as fout:
     for k,v in lookup_dict.iteritems():
         fout.write(k+'\t'+v+'\n')
 
+#With Fluors
+with open('tx_to_gene_name_gfp_tdtom_lacz.tsv','w') as fout:
+    for k,v in lookup_dict.iteritems():
+        fout.write(k+'\t'+v+'\n')
 #add the manual mappings for fluorophores
 with open('tx_to_gene_name_gfp_tdtom_lacz.tsv','a') as fout:
     fout.write('egfp\tegfp\ntdtomato\ttdtomato\nlacZ\tlacZ')
