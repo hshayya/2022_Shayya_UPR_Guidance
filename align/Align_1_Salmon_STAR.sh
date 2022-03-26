@@ -1,7 +1,8 @@
 #Salmon Alignment. 
 #Alignment_files.tsv: LibName | R1_path | R2_path
 #Index not included in dataset, follow code in ../annot to make
-#Can use index +/- fluors. I used -fluors for most things (+fluors for Ddit3 cKO exps only)
+#Can use index +/- fluors. 
+###### !!!!! PAPER USES +FLUORS for everything except OSN differentiation data. #####
 #geneMap included on Zenodo, ./annot folder.
 {
   while IFS=$'\t' read -ra line
