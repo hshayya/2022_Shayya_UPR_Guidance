@@ -13,9 +13,9 @@ Hani J. Shayya<sup>1,2,3</sup>, Jerome K. Kahiapo<sup>1,3</sup>, Rachel Duffié<
 <sup>7</sup>Department of Biochemistry and Molecular Biophysics, Columbia University Irving Medical Center, Vagelos College of Physicians and Surgeons, Columbia University, New York, NY, 10032, USA\
 <sup>8</sup>Department of Neuroscience, Columbia University Irving Medical Center, Vagelos College of Physicians and Surgeons, Columbia University, New York, NY, 10032, USA\
 
-**Raw Data:**\
+**Data Availability:**\
 GEO: GSE198886\
-Zenodo: (available after publication)
+Zenodo: (available after publication. Includes raw data, intermediates and final analysis output)
 
 **Contents:**\
 ***annot***: Create custom GTFs/STAR & Salmon indices used in the study\
@@ -45,13 +45,10 @@ Salmon v.0.13.1\
 STAR v2.5.3a\
 samtools 1.7 (using htslib 1.7-6-g6d2bfb7)\
 wigToBigWig v 4\
-cellranger v2.1.1-3.1.0\
-
+cellranger v2.1.1-3.1.0
 
 ***Flow Cytometry and Image Processing***:\
 R SessionInfo: [sessioninfo_mac.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8441712/sessioninfo_mac.txt)\
 FIJI 2.1.0/1.53c (Build 5f23140693, Java 1.8.0_202 (64-bit))\
 Jython 2.7.1\
 FlowJo 10.7.1
-
-
