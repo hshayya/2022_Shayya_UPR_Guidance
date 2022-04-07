@@ -60,5 +60,6 @@ Zenodo: (available after publication)
 
 ***Software Info***
 
-**Genomics**
+**Genomics**: [sessioninfo_linux.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8438755/sessioninfo_linux.txt)
 
+**Flow Cytometry and Image Processing**:
