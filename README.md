@@ -62,14 +62,10 @@ Zenodo: (available after publication)
 
 **Genomics**: [sessioninfo_linux.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8438755/sessioninfo_linux.txt)
 
-Salmon v.0.13.1
-
-STAR v2.5.3a
-
-samtools 1.7 (using htslib 1.7-6-g6d2bfb7)
-
-wigToBigWig v 4
-
-cellranger v2.1.1-3.1.0 
+Salmon v.0.13.1  
+STAR v2.5.3a  
+samtools 1.7 (using htslib 1.7-6-g6d2bfb7)  
+wigToBigWig v 4  
+cellranger v2.1.1-3.1.0   
 
 **Flow Cytometry and Image Processing**:
