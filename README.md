@@ -35,7 +35,7 @@ Zenodo: (available after publication. Includes raw data, intermediates and final
 
 1) For genomics and flow cytometry folders, see corresponding folders in Zenodo dataset for useful intermediate & output files. The posted code contains commented-out lines that read the intermediate files and generate the final figures in the paper, which will save some time on re-doing the anlaysis. 
 2) Please note that some aspects of the genomics (ie. alignment) introduce randomness that will cause the included intermediate files to differ (VERY) slightly from the files you might get re-running the analysis from scratch. This is expected and will not affect the conclusions of the work.
-3) Image processing scripts are generally meant to serve as examples to show how the analysis was done. Useful raw, intermediate, and output files are included on Zenodo where possible, but the size of the dataset and complexity of the file-structure here make it so that the scripts provided here will not work "out-of-the-box". Please contact Hani if you'd like anything that isn't posted and we'll figure out a way to get it to you.
+3) Image processing scripts are generally meant to serve as examples to show how the analysis was done. Useful raw, intermediate, and output files are included on Zenodo where possible, but the size of the dataset and complexity of the file-structure here make it so that the scripts provided will not work "out-of-the-box". Please contact Hani if you'd like anything that isn't posted and we'll figure out a way to get it to you.
 
 **Genomics Software Info**:\
 R SessionInfo: [sessioninfo_linux.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8438755/sessioninfo_linux.txt)\
