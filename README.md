@@ -41,8 +41,9 @@ Zenodo: (available after publication)
 
 ***Software Info***
 
-**Genomics**: [sessioninfo_linux.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8438755/sessioninfo_linux.txt)
+**Genomics**: 
 
+R SessionInfo:[sessioninfo_linux.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8438755/sessioninfo_linux.txt)\
 Salmon v.0.13.1\
 STAR v2.5.3a\
 samtools 1.7 (using htslib 1.7-6-g6d2bfb7)\
@@ -50,3 +51,9 @@ wigToBigWig v 4\
 cellranger v2.1.1-3.1.0 
 
 **Flow Cytometry and Image Processing**:
+R SessionInfo: [sessioninfo_mac.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8441712/sessioninfo_mac.txt)\
+FIJI 2.1.0/1.53c (Build 5f23140693, Java 1.8.0_202 (64-bit))\
+Jython 2.7.1\
+FlowJo 10.7.1
+
+
