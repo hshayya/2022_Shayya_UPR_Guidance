@@ -11,7 +11,7 @@ Hani J. Shayya<sup>1,2,3</sup>, Jerome K. Kahiapo<sup>1,3</sup>, Rachel Duffié<
 <sup>5</sup>The Miller Institute for Basic Research in Science, University of California Berkeley, Berkeley, CA 94720 USA\
 <sup>6</sup>Barnard College, New York, NY, 10025 USA\
 <sup>7</sup>Department of Biochemistry and Molecular Biophysics, Columbia University Irving Medical Center, Vagelos College of Physicians and Surgeons, Columbia University, New York, NY, 10032, USA\
-<sup>8</sup>Department of Neuroscience, Columbia University Irving Medical Center, Vagelos College of Physicians and Surgeons, Columbia University, New York, NY, 10032, USA\
+<sup>8</sup>Department of Neuroscience, Columbia University Irving Medical Center, Vagelos College of Physicians and Surgeons, Columbia University, New York, NY, 10032, USA
 
 **Data Availability:**\
 GEO: GSE198886\
