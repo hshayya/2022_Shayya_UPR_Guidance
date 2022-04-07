@@ -37,8 +37,7 @@ Zenodo: (available after publication. Includes raw data, intermediates and final
 2) Please note that some aspects of the genomics (ie. alignment) introduce randomness that will cause the included intermediate files to differ (VERY) slightly from the files you might get re-running the analysis from scratch. This is expected and will not affect the conclusions of the work.
 3) Image processing scripts are generally meant to serve as examples to show how the analysis was done. Useful raw, intermediate, and output files are included on Zenodo where possible, but the size of the dataset and complexity of the file-structure here make it so that the scripts provided here will not work "out-of-the-box". Please contact Hani if you'd like anything that isn't posted and we'll figure out a way to get it to you.
 
-**Software Info**\
-***Genomics***:\
+**Genomics Software Info**:\
 R SessionInfo: [sessioninfo_linux.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8438755/sessioninfo_linux.txt)\
 Python (2.7.17): [python_packages.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8441843/python_packages.txt)\
 Salmon v.0.13.1\
@@ -47,7 +46,7 @@ samtools 1.7 (using htslib 1.7-6-g6d2bfb7)\
 wigToBigWig v 4\
 cellranger v2.1.1-3.1.0
 
-***Flow Cytometry and Image Processing***:\
+**Flow Cytometry and Image Processing Software Info**:\
 R SessionInfo: [sessioninfo_mac.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8441712/sessioninfo_mac.txt)\
 FIJI 2.1.0/1.53c (Build 5f23140693, Java 1.8.0_202 (64-bit))\
 Jython 2.7.1\
