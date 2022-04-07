@@ -13,13 +13,11 @@ Hani J. Shayya<sup>1,2,3</sup>, Jerome K. Kahiapo<sup>1,3</sup>, Rachel Duffié<
 <sup>7</sup>Department of Biochemistry and Molecular Biophysics, Columbia University Irving Medical Center, Vagelos College of Physicians and Surgeons, Columbia University, New York, NY, 10032, USA\
 <sup>8</sup>Department of Neuroscience, Columbia University Irving Medical Center, Vagelos College of Physicians and Surgeons, Columbia University, New York, NY, 10032, USA\
 
-**Raw Data:**
-
+**Raw Data:**\
 GEO: GSE198886\
 Zenodo: (available after publication)
 
-**Contents:**
-
+**Contents:**\
 ***annot***: Create custom GTFs/STAR & Salmon indices used in the study\
 ***align***: Alignment\
 ***bk_rnaseq***: Bulk RNA-seq analysis of OSN differentiation, stress score computation in WT & swap mice, Omp-Cre Ddit3 and M28-iCre/iGFP Ddit3 experiments\
@@ -33,24 +31,21 @@ Zenodo: (available after publication)
 ***imageproc_gloms_pearson***: Example scripts showing how red/green pixel intensities were extracted in blinded fashion from 20x images of glomeruli & pearson correlations computed to quantify fiber overlap ~ genotype.\
 ***imageproc_OE_IF_quant***: Example scripts showing how cells were extracted from OE IF images, M28 signals measured and local differences in M28 levels GFP - tdtom cells computed.
 
-**Notes**
-
+**Notes**\
 1) For genomics and flow cytometry folders, see corresponding folders in Zenodo dataset for useful intermediate & output files. The posted code contains commented-out lines that read the intermediate files and generate the final figures in the paper, which will save some time on re-doing the anlaysis. 
 2) Please note that some aspects of the genomics (ie. alignment) introduce randomness that will cause the included intermediate files to differ (VERY) slightly from the files you might get re-running the analysis from scratch. This is expected and will not affect the conclusions of the work.
 3) Image processing scripts are generally meant to serve as examples to show how the analysis was done. Useful raw, intermediate, and output files are included on Zenodo where possible, but the size of the dataset and complexity of the file-structure here make it so that the scripts provided here will not work "out-of-the-box". Please contact Hani if you'd like anything that isn't posted and we'll figure out a way to get it to you.
 
-***Software Info***
-
-**Genomics**: 
-
-R SessionInfo:[sessioninfo_linux.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8438755/sessioninfo_linux.txt)\
+***Software Info***\
+**Genomics**:\
+R SessionInfo: [sessioninfo_linux.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8438755/sessioninfo_linux.txt)\
 Salmon v.0.13.1\
 STAR v2.5.3a\
 samtools 1.7 (using htslib 1.7-6-g6d2bfb7)\
 wigToBigWig v 4\
 cellranger v2.1.1-3.1.0 
 
-**Flow Cytometry and Image Processing**:
+**Flow Cytometry and Image Processing**:\
 R SessionInfo: [sessioninfo_mac.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8441712/sessioninfo_mac.txt)\
 FIJI 2.1.0/1.53c (Build 5f23140693, Java 1.8.0_202 (64-bit))\
 Jython 2.7.1\
