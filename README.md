@@ -15,7 +15,7 @@ Hani J. Shayya<sup>1,2,3</sup>, Jerome K. Kahiapo<sup>1,3</sup>, Rachel Duffié<
 
 **Data Availability:**\
 GEO: GSE198886\
-Zenodo: (available after publication. Includes raw data, intermediates and final analysis output)
+Zenodo doi: 10.5281/zenodo.6448089
 
 **Contents:**\
 ***annot***: Create custom GTFs/STAR & Salmon indices used in the study\
