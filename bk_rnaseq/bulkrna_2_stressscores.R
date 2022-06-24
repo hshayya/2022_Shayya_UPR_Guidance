@@ -1,11 +1,13 @@
 #Compute Stress Scores from Bulk iRFP Bright/Dim Sorts
+setwd('/media/storageA/hani/test_env/')
+
 library(tidyverse)
 library(reshape2)
 library(DESeq2)
 library(tximport)
 
 #Necessary Files
-zonal_annotation <- read_tsv('ORs-by-zone.txt', col_names = c('gene_name','zone'))
+zonal_annotation <- read_tsv('/media/storageA/kevin/annotation/ORs-by-zone.txt', col_names = c('gene_name','zone'))
 atf5ko_vs_wt <- read_csv('Atf5KO_CebpgKO_OmpGFP.csv')
 matsunami_ORs <- c('oOR_Matsunami.csv','uOR_Matsunami.csv') %>%
   map(.f = function(path_) {
@@ -14,14 +16,14 @@ matsunami_ORs <- c('oOR_Matsunami.csv','uOR_Matsunami.csv') %>%
       pull(id) %>% list() %>% set_names(name_)
   }) %>% unlist(recursive = F)
 matsunami_de <- read_tsv('matsunami_rtp_dko_vs_WT.tsv')
-tx2gene <- read.table('tx_to_gene_name_gfp_tdtom_lacz.tsv', sep='\t', 
+tx2gene <- read.table('/media/storageA/hani/alignment/Salmon_Index_mm10_egfp_tdtom_lacz/tx_to_gene_name_gfp_tdtom_lacz.tsv', sep='\t', 
                       header=F, stringsAsFactors = F, col.names = c('tx','gene'))
 
 #Prep for Deseq
 file_paths <- list.files(path = './', 
-                         pattern = '.*quant.sf', recursive = T, full.names = TRUE) %>%
-  .[!str_detect(.,'nofluor')] %>% .[str_detect(.,'Ctrl')] %>%
-  set_names(str_extract(.,'(?<=SalmonOut_).*(?=/quant.sf$)'))
+                         pattern = '.*quant.sf', recursive = T) %>% 
+  .[str_detect(.,'Ctrl[1-4]')] %>%
+  set_names(str_extract(.,'.*(?=_quant.sf$)'))
 
 imported_data <- tximport(file_paths, type = 'salmon', tx2gene = tx2gene)
 
