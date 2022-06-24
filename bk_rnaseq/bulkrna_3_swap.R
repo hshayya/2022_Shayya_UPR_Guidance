@@ -7,9 +7,9 @@ library(tximport)
 
 #Load Files
 file_paths <- list.files(path = './',
-                         pattern = '.*quant.sf', recursive = T, full.names = TRUE) %>%
+                         pattern = '.*quant.sf', recursive = T) %>%
   .[str_detect(.,'Ctrl|Swap')] %>%
-  set_names(str_extract(.,'(?<=SalmonOut_).*(?=/quant.sf$)'))
+  set_names(str_extract(.,'.*(?=_quant.sf$)'))
 
 tx2gene <- read.table('tx_to_gene_name_gfp_tdtom_lacz.tsv', sep='\t', 
                       header=F, stringsAsFactors = F, col.names = c('tx','gene'))
@@ -24,17 +24,34 @@ coldata <- data.frame('lib_id' = names(file_paths)) %>%
   mutate('Group' = str_extract(lib_id, 'Ctrl|Swap'),
          'Animal' = str_extract(lib_id, '(?<=Ctrl|Swap)[0-9]+'),
          'Population' = str_extract(lib_id,'iRFP(GFP)?'),
-         'Intensity' = str_extract(lib_id,'Low|High')) %>%
+         'Intensity' = str_extract(lib_id,'Low|High'),
+         'Group' = fct_relevel(Group, 'Ctrl','Swap'),
+         'Population' = fct_relevel(Population,'iRFP','iRFPGFP'),
+         'Intensity' = fct_relevel(Intensity, 'Low','High')) %>%
   column_to_rownames(var = 'lib_id')
 
 #Check Full Dataset first for clustering and the like
 dds_full <- DESeqDataSetFromTximport(txi = imported_data, 
                                      colData = coldata,
-                                     design = ~Group) %>%
+                                     design = ~Population+Intensity) %>%
   DESeq()
 
-#Compute the Stress scores on a per-lib basis
-stress_scores_per_animal <- counts(dds_full, normalized = T) %>%
+#PCA for Swap Experiment
+pca_obj_swap_final <- plotPCA(vst(dds_full), 
+                              intgroup = c('Population','Intensity', 'Group'), returnData = T)
+ggplot(data = pca_obj_swap_final,
+       aes(x = PC1, y = PC2, color = interaction(Population, Intensity, lex.order = T),
+           shape = Group)) +
+  geom_point() +
+  theme_bw() +
+  xlab(paste0('PC1-', round(attr(pca_obj_swap_final, 'percentVar')[1]*100), '% Variance')) +
+  ylab(paste0('PC2-', round(attr(pca_obj_swap_final, 'percentVar')[2]*100), '% Variance')) +
+  theme(legend.position = 'bottom', legend.box = 'horizontal', legend.title = element_blank()) +
+  guides('color' = guide_legend(nrow = 2, order = 1),
+         'shape' = guide_legend(nrow = 2, order = 2))
+
+#Compute Final Stress Scores
+stress_scores_per_animal_final <- counts(dds_full, normalized = T) %>%
   as.data.frame() %>%
   rownames_to_column(var = 'gene_name') %>%
   melt(id.vars = c('gene_name'),
@@ -47,29 +64,29 @@ stress_scores_per_animal <- counts(dds_full, normalized = T) %>%
   summarize('log2FoldChange' = mean(log2, na.rm = T)) %>%
   ungroup()
 
-#write_tsv(stress_scores_per_animal,'Swap_stressscores_peranimal.tsv')
+#write_tsv(stress_scores_per_animal_final,'Swap_stressscores_peranimal.tsv')
 
-#Plot per-animal stress scores for M71, P2 and Swap OSNs
-color_scale <- c('Class I','M71','Mor23','P2','Mor28','other')
-color_scale <- c(scales::hue_pal()(length(color_scale)-1), 'black') %>% set_names(color_scale)
-
-ggplot(stress_scores_per_animal %>%
+#Point Plot for M71/P2/Swap, For Paper
+new_color_scale_2_17 <- scales::hue_pal()(7)[c(1,3,5,6,7)] %>% set_names(c('M71','Class I','Mor23','P2','Mor28')) %>%
+  c('other' = 'black')
+ggplot(stress_scores_per_animal_final %>%
          filter(gene_name %in% c('lacZ','Olfr151','Olfr17')) %>%
          mutate('gene_name' = fct_recode(gene_name,'M71'='Olfr151','P2' = 'Olfr17','M71->P2' = 'lacZ'),
                 'gene_name' = fct_relevel(gene_name, 'M71','P2','M71->P2')) %>%
          filter(is.finite(log2FoldChange) & 
                   ((Group == 'Swap' & gene_name == 'M71->P2') | 
-                     (Group == 'Ctrl') #only consider M71/P2 from control mice (avoid confounding from swap transcript)
+                     (Group == 'Ctrl')
                   )),
        aes(x = gene_name, y = log2FoldChange, color = gene_name)) +
   geom_point() +
   theme_bw() +
-  scale_color_manual(values = set_names(color_scale, c('Class I','M71','M71->P2','P2','Mor28','other'))) +
+  scale_color_manual(values = c(new_color_scale_2_17, 'M71->P2' = as.vector(new_color_scale_2_17)[2]), 
+                     na.value = 'black') +
   xlab('') + ylab('Stress Score') + 
   theme(legend.position = 'none')
 
-#Calculate p value for Swap vs. P2 using per-animal scores and Tukey post-test
-stress_scores_per_animal %>%
+#P value, Final, For Paper
+stress_scores_per_animal_final %>%
   filter(gene_name %in% c('lacZ','Olfr151','Olfr17')) %>%
   mutate('gene_name' = fct_recode(gene_name,'M71'='Olfr151','P2' = 'Olfr17','M71->P2' = 'lacZ'),
          'gene_name' = fct_relevel(gene_name, 'M71','P2','M71->P2')) %>%
@@ -81,22 +98,21 @@ stress_scores_per_animal %>%
   aov() %>%
   TukeyHSD()
 
-#Consistency of stress scores in Atf5(rep/+); Omp(iGFP/+) vs Swap Mice
-#Calculate averages within group (Ctrl/Swap, Pop, High/Low), then take average LFCs instead of computing per-animal (lots of dropout)
-stress_scores_by_hand <- counts(dds_full, normalized = T) %>%
-  as.data.frame() %>%
-  rownames_to_column(var = 'gene_name') %>%
-  melt(id.vars = c('gene_name'),
-       variable.name = 'lib_id') %>%
-  left_join(rownames_to_column(as.data.frame(colData(dds_full)), var = 'lib_id'),
-            by = 'lib_id') %>%
-  filter(str_detect(gene_name,'Olfr')) %>%
-  group_by(gene_name, Group, Population, Intensity) %>%
-  summarize('mean_cts' = mean(value)) %>%
-  summarize('log2' = log2(mean_cts[Intensity == 'High']/mean_cts[Intensity == 'Low'])) %>%
-  summarize('log2FoldChange' = mean(log2, na.rm = T))
-
-ggplot(data = stress_scores_by_hand %>%
+#Stress Scores in n=6 WT vs. n=3 Swap Libraries
+#Note this is NOT per animal -> FIRST taking averages per OR in each group, THEN log2FCs
+#We only needed the per-animal approach so that we could show the M71/P2 and LacZ on same scale w/ some statistical measure between them
+ggplot(data = counts(dds_full, normalized = T) %>%
+         as.data.frame() %>%
+         rownames_to_column(var = 'gene_name') %>%
+         melt(id.vars = c('gene_name'),
+              variable.name = 'lib_id') %>%
+         left_join(rownames_to_column(as.data.frame(colData(dds_full)), var = 'lib_id'),
+                   by = 'lib_id') %>%
+         filter(str_detect(gene_name,'Olfr')) %>%
+         group_by(gene_name, Group, Population, Intensity) %>%
+         summarize('mean_cts' = mean(value)) %>%
+         summarize('log2' = log2(mean_cts[Intensity == 'High']/mean_cts[Intensity == 'Low'])) %>%
+         summarize('log2FoldChange' = mean(log2, na.rm = T)) %>%
          dcast(gene_name ~ Group, value.var = 'log2FoldChange') %>%
          filter(complete.cases(.) & is.finite(Ctrl) & is.finite(Swap)),
        aes(x = Ctrl, y = Swap)) +
@@ -108,9 +124,10 @@ ggplot(data = stress_scores_by_hand %>%
             aes(label = paste0('rho=', round(est,2)), x = -Inf, y = Inf, hjust = 0, vjust = 1)) +
   xlab('Atf5(rep/+); Omp(iGFP/+)') + ylab('Atf5(rep/+); Omp(iGFP/+);\nP2(M71iLacZ/+)')
 
-#Sina Plot of Stress Scores for swap Exp 
-#This is n=6 for most genes except M71 & P2 (n=4 Ctrls only) and lacZ (n=2 Swap only))
-#This is ONLY used for swap experiment. For all other experiments use n=4 defined from the below DESeq2 approach
+#Sina Plot
+#WT(n=6), Swap(n=3) -> most genes n=9 except M71&P2(WT only, n=6) and lacZ (Swap only, n=3)
+#These values ONLY used for swap experiment. 
+#For all other experiments use n=4 defined from the below DESeq2 approach
 stress_scores_for_swap_sina <- counts(dds_full, normalized = T) %>%
   as.data.frame() %>%
   rownames_to_column(var = 'gene_name') %>%
@@ -129,20 +146,15 @@ stress_scores_for_swap_sina <- counts(dds_full, normalized = T) %>%
 
 #write_tsv(stress_scores_for_swap_sina, 'Swap_stressscores.tsv')
 
-#Scales
-#To keep consistency with prior colors from FACS experiments.
-new_color_scale_2_17 <- scales::hue_pal()(7)[c(1,3,5,6,7)] %>% set_names(c('M71','Class I','Mor23','P2','Mor28')) %>%
-  c('other' = 'black')
-
-new_alpha_scale_2_17 <- ifelse(names(new_color_scale_2_17) == 'other', 0.1, 1) %>% set_names(names(new_color_scale_2_17))
-
 #KDE for Swap Sina Plot
 kde_swap_sina <- stress_scores_for_swap_sina %>%
   filter(!is.na(log2FoldChange) & is.finite(log2FoldChange))  %>%
   {density(.$log2FoldChange)}
 
-#Generate the Swap Sina Plot
-set.seed(547)
+#Sina Plot To find optimal seed, mapped across seeds looking for all kde_val < 0.05
+new_alpha_scale_2_17 <- ifelse(names(new_color_scale_2_17) == 'other', 0.1, 1) %>% set_names(names(new_color_scale_2_17))
+
+set.seed(1317)
 ggplot(data = stress_scores_for_swap_sina %>%
          filter(!is.na(log2FoldChange) & is.finite(log2FoldChange)) %>%
          mutate('kde_val' = map_dbl(log2FoldChange, .f = function(x) {
