@@ -21,7 +21,7 @@ Zenodo: https://doi.org/10.5281/zenodo.6448088
 ***annot***: Create custom GTFs/STAR & Salmon indices used in the study\
 ***align***: Alignment\
 ***bk_rnaseq***: Bulk RNA-seq analysis of OSN differentiation, stress score computation in WT & swap mice, Omp-Cre Ddit3 and M28-iCre/iGFP Ddit3 experiments\
-***or_cds_clus***: Alignment and clustering of OR protein sequences, visualization\
+***or_pcoa_rfreg***: Alignment and clustering of OR protein sequences, PCoA visualizaiton and Random Forest Regression\
 ***scrna***: scRNA-seq clustering and DE analysis high/low stress OSNs\
 ***aracneviper***: Prep & run ARACNE-AP network reverse-engineering, run & viz msVIPER high/low stress OSNs\
 ***flowcyt***: Analysis/Viz for OR-iGFP; Atf5-Rep experiments & Omp-GFP;Atf5-Rep;Perk Het experiments\
