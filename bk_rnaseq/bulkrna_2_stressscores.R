@@ -3,19 +3,28 @@ library(tidyverse)
 library(reshape2)
 library(DESeq2)
 library(tximport)
+library(fgsea)
 
 #Necessary Files
+setwd('/media/storageA/hani/test_env/')
+
 zonal_annotation <- read_tsv('ORs-by-zone.txt', col_names = c('gene_name','zone'))
+
 atf5ko_vs_wt <- read_csv('Atf5KO_CebpgKO_OmpGFP.csv')
+
 matsunami_ORs <- c('oOR_Matsunami.csv','uOR_Matsunami.csv') %>%
   map(.f = function(path_) {
     name_ <- str_extract(path_, '(u|o)OR')
     read_csv(path_) %>% 
       pull(id) %>% list() %>% set_names(name_)
   }) %>% unlist(recursive = F)
+
 matsunami_de <- read_tsv('matsunami_rtp_dko_vs_WT.tsv')
+
 tx2gene <- read.table('tx_to_gene_name_gfp_tdtom_lacz.tsv', sep='\t', 
                       header=F, stringsAsFactors = F, col.names = c('tx','gene'))
+
+pathways <- fgsea::gmtPathways('mh.all.v0.3.symbols.gmt')
 
 #Prep for Deseq
 file_paths <- list.files(path = './', 
@@ -170,6 +179,33 @@ ggplot(res %>%
   guides(color = guide_legend(nrow = 1, override.aes = list(alpha = 1))) +
   xlab('Mean of Normalized Counts') + ylab('Log2 Fold Change\niRFP Bright/Dim') 
 
+#GSEA High vs. Low Stress
+gsea_out_wald <- fgsea::fgsea(pathways = pathways,
+                              stats = res %>%
+                                filter(!is.na(stat)) %>%
+                                {set_names(.$stat, .$gene_name)},
+                              nperm = 10000,
+                              nproc = 10)
+
+gsea_dat <- gsea_out_wald %>%
+  arrange(NES) %>%
+  mutate('significance' = ifelse(padj < 0.05, 'Significant','Not Significant'),
+         'pathway' = factor(pathway, levels = pathway))
+
+ggplot(gsea_dat, 
+       aes(x = NES, y = pathway, fill = significance)) +
+  geom_col() +
+  geom_vline(xintercept = 0) +
+  theme_bw() +
+  scale_y_discrete(labels = function(x) {ifelse(str_detect(x,'HALLMARK'),
+                                                str_to_title(str_to_lower(str_extract(x,'(?<=HALLMARK_).*'))),
+                                                str_to_title(str_to_lower(x)))}) +
+  scale_fill_manual(values = c('Significant' = 'red','Not Significant' = 'black')) +
+  theme(axis.text.y = element_text(color = ifelse(str_detect(gsea_dat$pathway, 'UNFOLDED'), 'red','black')),
+        legend.title = element_blank()) +
+  ylab('') + xlab('NES iRFP Bright/Dim') +
+  theme(legend.position = 'bottom') + guides(fill = guide_legend(nrow = 2))
+
 #Violin Plot ORs by Zone
 ggplot(data = res %>% 
          left_join(zonal_annotation, by = 'gene_name') %>%
@@ -308,3 +344,4 @@ ggplot(data = res %>%
   stat_function(fun = function(x) {x}, linetype = 'dashed', color = 'black') +
   geom_smooth(method = 'lm', se = T, alpha = 0.2, color = 'blue') +
   xlab('Stress Score- iOSNs and mOSNs') + ylab('Stress Score- mOSNs only')
+
