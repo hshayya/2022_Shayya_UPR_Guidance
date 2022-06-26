@@ -1,6 +1,6 @@
-#Salmon Alignment. 
-#Alignment_files.tsv: LibName | R1_path | R2_path
-#Index not included in dataset, follow code in ../annot to make
+#Example Salmon Pseudo-Alignment. 
+#libs_for_alignment.tsv: LibName\tR1_path\tR2_path (not included, can generate in R/python/excel)
+#Index not included in dataset, follow code in ../annot to generate these
 #Can use index +/- fluors. 
 ###### !!!!! PAPER USES +FLUORS for everything except OSN differentiation data. #####
 #geneMap included on Zenodo, ./annot folder.
@@ -13,8 +13,9 @@
   done
 } < libs_for_alignment.tsv
 
-#STAR Alignment
+#Example STAR Alignment
 #Only did this for OmpCre Ddit3 libs
+#libs_for_alignment.tsv: LibName\tR1_path\tR2_path (not included, can generate in R/python/excel)
 #genomeDir not included in dataset, follow code in ../annot to make
 {
   while IFS=$'\t' read -ra line
@@ -27,24 +28,18 @@
   done
 } < libs_for_alignment.tsv
 
-#Post-process STAR-aligned libs
+#Example STAR post-processing
+#First, find all bam files in any sub-directory of current working directory
 rna_bams=()
 while IFS=  read -r -d $'\0'; do
     rna_bams+=("$REPLY")
 done < <(find . -iname *bam -type f -print0)
 
+#Extract -q 30 reads and create bam index (all in the appropriate sub-dirs of current working directory)
 for i in ${rna_bams[@]}; do
     echo Working on file $i
     my_path=$(echo $i | grep -Po ".*(?=_Aligned.sortedByCoord.out.bam)")
     samtools view -b -q 30 --threads 20 -o $my_path"_q30.bam" $i
     echo Indexing file $my_path"_q30.bam"
     samtools index $my_path"_q30.bam"
-    echo Generating wiggle files with output $my_path"_q30"
-    make_wiggle --count_files $my_path"_q30.bam" --countfile_format BAM --min_length 17 --fiveprime -o $my_path"_q30"
-    echo Generating bigwigs...
-    wigToBigWig $my_path"_q30_fw.wig" ./mm10.chrom.sizes $my_path"_q30_fw.wig.bw"
-    wigToBigWig $my_path"_q30_rc.wig" ./mm10.chrom.sizes $my_path"_q30_rc.wig.bw"
-    echo Removing wiggles...
-    rm $my_path"_q30_fw.wig"
-    rm $my_path"_q30_rc.wig"
 done
