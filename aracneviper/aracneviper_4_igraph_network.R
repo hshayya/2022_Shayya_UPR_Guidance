@@ -1,11 +1,9 @@
-#Prep Workspace
+#Represent Ddit3 Regulon using iGraph
 
 library(igraph)
 library(tidyverse)
 library(ggraph)
 library(reshape2)
-
-setwd('/media/storageA/hani/Olfactory_Regulon/')
 
 #Load Regulons
 osn_regulon <- viper::aracne2regulon(afile = 'aracne_network_out_noheader.txt',
@@ -21,7 +19,7 @@ ddit3_net <- osn_regulon$Ddit3 %>%
          'Regulator' = rep('Ddit3',nrow(.)),
          'mode_of_reg' = ifelse(tfmode>0,'Positive','Negative'),
          'guidance_ident' = ifelse(Target %in% axon_guidance_genes$gene_name | 
-                                     str_detect(Target,'Ddit3|Rtp|Unc|Cng|Cntn|Eph|Pcdh|Ten'),
+                                     str_detect(Target,'Ddit3|Rtp|Unc|Cng|Cntn|Eph|Pcdh|Sema|Ten'),
                                    'Guidance Mol','Other')) %>%
   dplyr::select(Regulator, Target, mode_of_reg, likelihood, guidance_ident)
 
@@ -31,7 +29,7 @@ vert_df <- unlist(ddit3_net[,c('Regulator','Target')]) %>%
   left_join(scrna_de, by = c('name' = 'gene_name')) %>%
   mutate('identity' = ifelse(log2FoldChange > 0,'High Stress','Low Stress'),
          'guidance_ident' = ifelse(name %in% axon_guidance_genes$gene_name | 
-                                     str_detect(name,'Ddit3|Rtp|Unc|Cng|Cntn|Eph|Pcdh|Ten'),
+                                     str_detect(name,'Ddit3|Rtp|Unc|Cng|Cntn|Eph|Pcdh|Sema|Ten'),
                                    'Guidance Mol','Other')) %>%
   dplyr::select(name,identity, guidance_ident)
 
