@@ -46,7 +46,7 @@ Python (2.7.17): [python_packages.txt](https://github.com/hshayya/2022_Shayya_UP
 Salmon v.0.13.1\
 STAR v2.5.3a\
 samtools 1.7 (using htslib 1.7-6-g6d2bfb7)\
-wigToBigWig v 4\
+bamCoverage 3.1.1\
 cellranger v2.1.1-3.1.0
 
 **Flow Cytometry and Image Processing Software Info**:\
