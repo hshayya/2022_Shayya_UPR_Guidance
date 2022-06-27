@@ -41,7 +41,7 @@ Zenodo: https://doi.org/10.5281/zenodo.6448088
 4) Please note that in much of the code we label our genotypes as WT (=WT), Ctrl (=Het) and Exp (=cKO). This shows up in filenames/variable names, especially in the imaging analysis. On final figures, these labels are updated to the WT/Het/cKO nomenclature used in the paper.
 
 **Genomics Software Info**:\
-R SessionInfo: [sessioninfo_linux.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8438755/sessioninfo_linux.txt)\
+R SessionInfo: [sessioninfo_linux.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8995317/sessioninfo_linux.txt)\
 Python (2.7.17): [python_packages.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8441843/python_packages.txt)\
 Salmon v.0.13.1\
 STAR v2.5.3a\
