@@ -30,6 +30,7 @@ Zenodo: https://doi.org/10.5281/zenodo.6448088
 ***imageproc_blinding***: Example scripts showing how images of 20x OB glomeruli were blinded prior to intermixed/compartmentalized/adjacent calls, script for blinding OE IF images prior to counting tdtom and GFP cells in M28/M71 Perk mice\
 ***imageproc_gloms_pearson***: Example scripts showing how red/green pixel intensities were extracted in blinded fashion from 20x images of glomeruli & pearson correlations computed to quantify fiber overlap ~ genotype. The pxintz intermidate files are included on Zenodo.\
 ***imageproc_OE_IF_quant***: Example scripts showing how cells were extracted from OE IF images, M28 signals measured and local differences in M28 levels GFP - tdtom cells computed.\
+***imageproc_OB_IF***: Example scripts for qualitative + quantitative analysis of the p28 Mor28 Ddit3 cKO Nrp2 IF experiments in the OB & the qualitative analysis of the p5 Mor28 Ddit3 WT & cKO M28 IF experiments in the OB.\
 ***imageproc_zenodoprep***: for internal use in copying 20x glomerular images from my filesystem to Zenodo, updating names to reflect WT/Het/cKO nomenclature in paper and creating montages w/ blinded annotations. 
 
 **Notes**
