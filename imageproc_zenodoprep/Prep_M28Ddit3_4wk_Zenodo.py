@@ -41,7 +41,7 @@ def parse_imp(fpath, rotate = False, autolevel = False):
 
 #User Inputs
 dir_ = '/Volumes/Image_Data/M28iCreiGFP_Ddit3cKO_Experiments' 
-last_csv = '/Volumes/Image_Data/M28iCreiGFP_Ddit3cKO_Experiments/Analysis_Glomeruli/Blinded_Assignment/4wk_M28Ddit3/LookupTable_1-13-22_Output.tsv'
+last_csv = '/Volumes/Image_Data/M28iCreiGFP_Ddit3cKO_Experiments/Analysis_Glomeruli/Blinded_Assignment/4wk_M28Ddit3/LookupTable_5-10-22_Output.tsv'
 regex = '^MAX.*4wkM(or)?28_(WT|Ctrl|Exp).*20x.*.tif$'
 file_copy_dir = '/Volumes/Backup_HJS/Papers/UPR_AxonGuidance_2021/Zenodo/Images_20xGlomeruli/4wk_M28_Ddit3'
 fix_mappings = {'WT':'WT','Ctrl':'Het','Exp':'cKO'} #on my filesystem WT = WT, Ctrl = Het, Exp = cKO. Update names so images posted to Zenodo use same names as we do in paper.
