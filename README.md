@@ -15,7 +15,8 @@ Hani J. Shayya<sup>1,2,3</sup>, Jerome K. Kahiapo<sup>1,3</sup>, Rachel Duffié<
 
 **Data Availability:**\
 GEO: GSE198886\
-Zenodo: https://doi.org/10.5281/zenodo.6448088
+Zenodo: 10.17632/262gtmgzkw.1 (version 1, will remove once Mendeley dataset is released)
+Mendeley: http://dx.doi.org/10.17632/262gtmgzkw.1 (in review)
 
 **Contents:**\
 ***annot***: Create custom GTFs/STAR & Salmon indices used in the study\
@@ -28,17 +29,19 @@ Zenodo: https://doi.org/10.5281/zenodo.6448088
 ***imageproc_helpers***: Scripts for useful image processing tasks (max projections, montages, downsampling)\
 ***imageproc_viz***: Example scripts showing how figures in the paper were generated (4x OB montages for quantiative/qualitative comparisons, 20x Montages, OE montages w/ red/gree ROIs delineated)\
 ***imageproc_blinding***: Example scripts showing how images of 20x OB glomeruli were blinded prior to intermixed/compartmentalized/adjacent calls, script for blinding OE IF images prior to counting tdtom and GFP cells in M28/M71 Perk mice\
-***imageproc_gloms_pearson***: Example scripts showing how red/green pixel intensities were extracted in blinded fashion from 20x images of glomeruli & pearson correlations computed to quantify fiber overlap ~ genotype. The pxintz intermidate files are included on Zenodo.\
+***imageproc_gloms_pearson***: Example scripts showing how red/green pixel intensities were extracted in blinded fashion from 20x images of glomeruli & pearson correlations computed to quantify fiber overlap ~ genotype. The pxintz intermidate files are included on Mendeley.\
 ***imageproc_OE_IF_quant***: Example scripts showing how cells were extracted from OE IF images, M28 signals measured and local differences in M28 levels GFP - tdtom cells computed.\
 ***imageproc_OB_IF***: Example scripts for qualitative + quantitative analysis of the p28 Mor28 Ddit3 cKO Nrp2 IF experiments in the OB & the qualitative analysis of the p5 Mor28 Ddit3 WT & cKO M28 IF experiments in the OB.\
-***imageproc_zenodoprep***: for internal use in copying 20x glomerular images from my filesystem to Zenodo, updating names to reflect WT/Het/cKO nomenclature in paper and creating montages w/ blinded annotations. 
+***imageproc_zenodoprep***: for internal use in copying 20x glomerular images from my filesystem to Mendeley (previous versions hosted on Zenodo), updating names to reflect WT/Het/cKO nomenclature in paper and creating montages w/ blinded annotations. 
 
 **Notes**
 
-1) For genomics and flow cytometry folders, see corresponding folders in Zenodo dataset for useful intermediate & output files. The posted code contains commented-out lines that read the intermediate files and generate the final figures in the paper, which will save some time on re-doing the anlaysis. 
+1) For genomics and flow cytometry folders, see corresponding folders in Mendeley dataset for useful intermediate & output files. The posted code contains commented-out lines that read the intermediate files and generate the final figures in the paper, which will save some time on re-doing the anlaysis. 
 2) Please note that some aspects of the genomics (ie. alignment) introduce randomness that will cause the included intermediate files to differ (VERY) slightly from the files you might get re-running the analysis from scratch. This is expected and will not affect the conclusions of the work.
-3) Image processing scripts are generally meant to serve as examples to show how the analysis was done, not re-create the entire analysis. Useful raw, intermediate, and output files are included on Zenodo where possible (all 20x glomerular max projections, blinded annotations, montages and intermediate files for Pearson correlations). This said, the size of the dataset and complexity of the file-structure here make it so that most scripts provided will not work "out-of-the-box". Please contact Hani if you'd like anything that isn't posted and we'll figure out a way to get it to you.
-4) Please note that in much of the code we label our genotypes as WT (=WT), Ctrl (=Het) and Exp (=cKO). This shows up in filenames/variable names, especially in the imaging analysis. On final figures, these labels are updated to the WT/Het/cKO nomenclature used in the paper.
+3) Image processing scripts are generally meant to serve as examples to show how the analysis was done, not re-create the entire analysis. The size of the dataset and complexity of the file-structure here make it so that most scripts provided will not work "out-of-the-box". 
+4) Imaging data can be found in two places on Mendeley: Images_20xGlomeruli.zip (max projections of all M71/M28 Perk/Ddit3/Hsp 20x glomeruli, blinded annotations, montages) and imageproc_gloms_pearson.zip (pxintz intermediate files for Pearson correlations of red/green fibers in M28 Ddit3/Perk glomeruli) 
+5) Please note that in much of the code we label our genotypes as WT (=WT), Ctrl (=Het) and Exp (=cKO). This shows up in filenames/variable names, especially in the imaging analysis. On final figures, these labels are updated to the WT/Het/cKO nomenclature used in the paper.
+6) Please contact Hani if you'd like anything that isn't posted and we'll figure out a way to get it to you.
 
 **Genomics Software Info**:\
 R SessionInfo: [sessioninfo_linux.txt](https://github.com/hshayya/2022_Shayya_UPR_Guidance/files/8995317/sessioninfo_linux.txt)\
