@@ -15,7 +15,7 @@ Hani J. Shayya<sup>1,2,3</sup>, Jerome K. Kahiapo<sup>1,3</sup>, Rachel Duffié<
 
 **Data Availability:**\
 GEO: GSE198886\
-Mendeley: http://dx.doi.org/10.17632/262gtmgzkw.1 (in review)\
+Mendeley: http://dx.doi.org/10.17632/262gtmgzkw.1
 
 **Contents:**\
 ***annot***: Create custom GTFs/STAR & Salmon indices used in the study\
